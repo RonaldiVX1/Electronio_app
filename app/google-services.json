@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "807213540372",
+    "project_id": "electronio-50207",
+    "storage_bucket": "electronio-50207.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807213540372:android:655d3dd8ed885ddd1f3301",
+        "android_client_info": {
+          "package_name": "com.example.electronioproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_jEGvCMzlUpCjlP1fCvBK5T5OTI_4s9Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

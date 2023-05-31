@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Electronio Project</string>
+    <string name="banner">Find and identify the parts or component, only using the image</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_component">Component</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_article">Article</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="placeholder_email">Input your email</string>
+    <string name="placeholder_password">Password</string>
+    <string name="login_title">Log in</string>
+    <string name="login_subtitle">Log in to continue</string>
+    <string name="register_subtitle">Don’t have any account yet?</string>
+    <string name="register_title">Register</string>
+    <string name="username_title">Username</string>
+    <string name="username_placeholder">Input Username</string>
+</resources>

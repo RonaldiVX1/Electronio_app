@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.electronioproject.ui.theme.Dark4
 import com.example.electronioproject.ui.theme.ElectronioProjectTheme
-import com.example.electronioproject.ui.theme.Grey
 import com.example.electronioproject.ui.theme.White
 
 @Composable

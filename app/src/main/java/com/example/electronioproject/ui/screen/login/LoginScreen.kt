@@ -1,5 +1,6 @@
 package com.example.electronioproject.ui.screen.login
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,34 +22,56 @@ import com.example.electronioproject.ui.theme.Dark1
 import com.example.electronioproject.ui.theme.Dark4
 import com.example.electronioproject.ui.theme.ElectronioProjectTheme
 import com.example.electronioproject.ui.theme.Grey
+import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
-    viewModel: LoginViewModel = LoginViewModel()
+    viewModel: LoginViewModel = LoginViewModel(),
+    navigateToRegister: () -> Unit,
+    onNavigateToHome: () -> Unit
 ) {
-
-
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .fillMaxHeight(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        TitleLogin(modifier = modifier)
-        LoginBox(viewModel = viewModel)
-        RegisterSection(modifier = modifier)
+    val scaffoldState = rememberScaffoldState()
+    Scaffold(
+        scaffoldState = scaffoldState,
+    ) { innerPadding ->
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .padding(innerPadding),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            TitleLogin(modifier = modifier)
+            LoginBox(
+                viewModel = viewModel,
+                onNavigateToHome = onNavigateToHome,
+                scaffoldState = scaffoldState
+            )
+            RegisterSection(
+                modifier = modifier,
+                onNavigateToRegister = {
+                    navigateToRegister()
+                }
+            )
+        }
     }
+
 }
 
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun LoginBox(
     modifier: Modifier = Modifier,
-    viewModel : LoginViewModel
+    viewModel: LoginViewModel,
+    scaffoldState: ScaffoldState,
+    onNavigateToHome: () -> Unit,
 ) {
+
     val state by viewModel.loadingState.collectAsState()
+    val scope = rememberCoroutineScope()
 
     var inputEmail by remember { mutableStateOf("") }
     var inputPassword by remember { mutableStateOf("") }
@@ -96,14 +119,19 @@ fun LoginBox(
                 .padding(top = 20.dp, bottom = 40.dp),
             title = stringResource(R.string.login_title),
             color = Dark4,
-            onClick = {viewModel.signInWithEmailAndPassword(inputEmail, inputPassword)}
+            onClick = { viewModel.signInWithEmailAndPassword(inputEmail, inputPassword) }
         )
-        when(state.status){
+        when (state.status) {
             LoadingState.Status.SUCCESS -> {
-                Text(text = "Success")
+                onNavigateToHome()
+                scope.launch {
+                    scaffoldState.snackbarHostState.showSnackbar("Login Success")
+                }
             }
             LoadingState.Status.FAILED -> {
-                Text(text = state.msg ?: "Error")
+                scope.launch {
+                    scaffoldState.snackbarHostState.showSnackbar(state.msg!!)
+                }
             }
             else -> {}
         }
@@ -136,6 +164,9 @@ fun FieldSection(
             onValueChange = onValueChange,
             colors = TextFieldDefaults.textFieldColors(
                 backgroundColor = Grey,
+            ),
+            textStyle = TextStyle(
+                color = Dark1,
             ),
             placeholder = {
                 Text(text = textPlaceholder)
@@ -172,6 +203,9 @@ fun PasswordSection(
             colors = TextFieldDefaults.textFieldColors(
                 backgroundColor = Grey,
             ),
+            textStyle = TextStyle(
+                color = Dark1,
+            ),
             visualTransformation = PasswordVisualTransformation(),
             placeholder = {
                 Text(text = textPlaceholder)
@@ -180,7 +214,6 @@ fun PasswordSection(
         )
     }
 }
-
 
 
 @Composable
@@ -213,7 +246,10 @@ fun TitleLogin(modifier: Modifier) {
 
 
 @Composable
-fun RegisterSection(modifier: Modifier) {
+fun RegisterSection(
+    modifier: Modifier,
+    onNavigateToRegister: () -> Unit,
+) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -225,7 +261,7 @@ fun RegisterSection(modifier: Modifier) {
                 fontSize = 14.sp
             ),
 
-        )
+            )
         Text(
             text = stringResource(R.string.register_title),
             style = TextStyle(
@@ -233,7 +269,7 @@ fun RegisterSection(modifier: Modifier) {
                 fontSize = 20.sp
             ),
             modifier = modifier
-                .clickable { }
+                .clickable { onNavigateToRegister() }
         )
     }
 }
@@ -243,6 +279,6 @@ fun RegisterSection(modifier: Modifier) {
 @Composable
 fun LoginScreenPreview() {
     ElectronioProjectTheme {
-        LoginScreen()
+//        LoginScreen()
     }
 }

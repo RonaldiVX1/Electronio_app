@@ -1,7 +1,6 @@
 package com.example.electronioproject.ui.screen.register
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -15,7 +14,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
 import com.example.electronioproject.R
 import com.example.electronioproject.ui.component.ButtonUniversal
 import com.example.electronioproject.ui.screen.utils.LoadingState
@@ -28,7 +26,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun RegisterScreen(
     modifier: Modifier = Modifier,
-    viewModel: RegisterViewModel = RegisterViewModel()
+    viewModel: RegisterViewModel = RegisterViewModel(),
+    onNavigateToLogin : () -> Unit,
 ) {
     val scaffoldState = rememberScaffoldState()
     Scaffold(
@@ -43,7 +42,11 @@ fun RegisterScreen(
                 verticalArrangement = Arrangement.Center
             ) {
                 TitleRegister(modifier = modifier)
-                LoginBox(viewModel = viewModel, scaffoldState = scaffoldState)
+                RegisterBox(
+                    viewModel = viewModel,
+                    scaffoldState = scaffoldState,
+                    onNavigateToLogin = onNavigateToLogin
+                )
 
             }
         }
@@ -54,10 +57,11 @@ fun RegisterScreen(
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun LoginBox(
+fun RegisterBox(
     modifier: Modifier = Modifier,
     viewModel: RegisterViewModel,
-    scaffoldState: ScaffoldState
+    scaffoldState: ScaffoldState,
+    onNavigateToLogin: () -> Unit,
 ) {
     val state by viewModel.loadingState.collectAsState()
     val scope = rememberCoroutineScope()
@@ -127,6 +131,7 @@ fun LoginBox(
         )
         when (state.status) {
             LoadingState.Status.SUCCESS -> {
+                onNavigateToLogin()
                 scope.launch {
                     scaffoldState.snackbarHostState.showSnackbar("Registration complete")
                 }
@@ -168,6 +173,9 @@ fun FieldSection(
             colors = TextFieldDefaults.textFieldColors(
                 backgroundColor = Grey,
             ),
+            textStyle = TextStyle(
+                color = Dark1,
+            ),
             placeholder = {
                 Text(text = textPlaceholder)
             },
@@ -202,6 +210,9 @@ fun PasswordSection(
             onValueChange = onValueChange,
             colors = TextFieldDefaults.textFieldColors(
                 backgroundColor = Grey,
+            ),
+            textStyle = TextStyle(
+                color = Dark1,
             ),
             visualTransformation = PasswordVisualTransformation(),
             placeholder = {
@@ -240,6 +251,6 @@ fun TitleRegister(modifier: Modifier) {
 @Composable
 fun RegisterScreenPreview() {
     ElectronioProjectTheme {
-        RegisterScreen()
+//        RegisterScreen()
     }
 }

@@ -15,4 +15,17 @@
     <string name="register_title">Register</string>
     <string name="username_title">Username</string>
     <string name="username_placeholder">Input Username</string>
+    <string name="terms_and_condition">Terms And Conditions</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="help_center">Help Center</string>
+    <string name="log_out">Log out</string>
+    <string name="log_out_failed">log out Failed</string>
+    <string name="username">username</string>
+    <string name="camera_text">Camera</string>
+    <string name="gallery_text">Gallery</string>
+    <string name="description_text">Deskripsi</string>
+    <string name="function_text">Fungsi Alat</string>
+    <string name="list_component_header">List Komponen</string>
+    <string name="list_article_header">Article</string>
+    <string name="button_scan">Scan Now</string>
 </resources>

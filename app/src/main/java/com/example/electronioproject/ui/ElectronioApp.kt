@@ -94,7 +94,13 @@ fun ElectronioApp(
                         navController.navigate(Screen.Register.route)
                     },
                     onNavigateToHome = {
-                        navController.navigate(Screen.Home.route)
+                        navController.navigate(Screen.Home.route){
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                inclusive = true
+                            }
+                            restoreState = true
+                            launchSingleTop = true
+                        }
                     }
                 )
             }

@@ -160,7 +160,7 @@ fun ImagePreview(
 
     ) {
     Image(
-        painter = painterResource(R.drawable.placeholder),
+        painter = painterResource(R.drawable.add_image),
         contentDescription = null,
         modifier = modifier
             .width(450.dp)
